@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="result"></p>
+    <script>
+        let res = document.getElementById('result');
+        function temperature(c) {
+            this.tempC = c;
+            this.toK = function() {
+                return this.tempC+273.15 ;
+            };
+            this.toF = function() {
+                return (this.tempC*1.8)+32 ;
+            }
+        }
+        let temp = new temperature(25);
+        let tempK = temp.toK();
+        let tempF = temp.toF();
+        res.innerHTML='Độ F: '+ tempF + '<br/>' + 'Độ K: '+tempK;
+
+    </script>
+</body>
+</html>
