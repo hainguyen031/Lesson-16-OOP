@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function mobile() {
+            this.battery = 100;
+            this.power = false;
+            this.message = ''; //tin nhan gui
+            this.inbox = []; //Hop thu den
+            this.sent = []; //Hop thu di
+
+            this.checkPower = function() {
+                return this.power;
+            }
+
+            this.turnOn = function() {
+                return this.power = true;
+            }
+
+            this.turnOff = function() {
+                return this.power = false;
+            }
+
+            this.checkBattery =function() {
+                if (this.battery < 100) {
+                    this.battery += 10;
+                    if (this.battery > 100) {
+                        this.battery = 100;
+                    }
+                }
+            }
+
+            this.viewMessage = function(text) {
+                if(this.checkPower()) {
+                    this.message = text;
+                    this.battery--;
+                }
+            }
+
+            this.receiveMessages = function(text) {
+                if(this.checkPower()) {
+                    this.inbox.push(text);
+                    this.battery--;
+                }
+            }
+
+            this.sendMessage = function(text, receive) {
+                if(this.checkPower()) {
+                    receive.receiveMessages(text);
+                    this.sent.push(text);
+                    this.battery--;
+                }
+            }
+
+            this.checkInbox = function() {
+                if(this.checkPower()) {
+                    for (let i in this.inbox) {
+                        document.write('Tin nhắn tới:'+ this.inbox[i] +'<br/>');
+                    }
+                    this.battery--;
+                }
+            }
+
+            this.checkSend = function() {
+                if(this.checkPower()) {
+                    for (let i in this.sent) {
+                        document.write('Tin nhắn đã gửi:'+ this.sent[i] +'<br/>');
+                    }
+                    this.battery--;
+                }
+            }
+
+        }
+
+        let nokia = new mobile();
+        let iPhone = new mobile();
+        nokia.turnOn();
+        iPhone.turnOn();
+        nokia.message='Hello';
+        nokia.sendMessage('Hi' , iPhone);
+        nokia.sendMessage('hello' , iPhone);
+        iPhone.checkInbox();
+        nokia.checkSend();
+    </script>
+</body>
+</html>
